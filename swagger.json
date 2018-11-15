@@ -1,0 +1,313 @@
+{
+	"swagger": "2.0",
+	"info": {
+		"description": "This is the notable backend server.",
+		"version": "1.0.0",
+		"title": "Notable API"
+	},
+	"host": "localhost:3000",
+	"basePath": "/api",
+	"paths": {
+		"/doctors": {
+			"get": {
+				"tags": [
+					"doctors"
+				],
+				"summary": "Returns list of doctors",
+				"description": "Multiple status values can be provided with comma separated strings",
+				"operationId": "listDoctors",
+				"produces": [
+					"application/json"
+				],
+				"parameters": [
+				],
+				"responses": {
+					"200": {
+						"description": "successful operation",
+						"schema": {
+							"type": "array",
+							"items": {
+								"$ref": "#/definitions/Doctor"
+							}
+						}
+					},
+					"400": {
+						"description": "Invalid status value"
+					}
+				}
+			}
+		},
+		"/appointments": {
+			"get": {
+				"tags": [
+					"appointments"
+				],
+				"summary": "Returns list of appointments",
+				"description": "Multiple status values can be provided with comma separated strings",
+				"operationId": "listAppointments",
+				"produces": [
+					"application/json"
+				],
+				"parameters": [
+				],
+				"responses": {
+					"200": {
+						"description": "successful operation",
+						"schema": {
+							"type": "array",
+							"items": {
+								"$ref": "#/definitions/Appointment"
+							}
+						}
+					},
+					"400": {
+						"description": "Invalid status value"
+					}
+				}
+			}
+		},
+		"/appointments/{doctorID}": {
+			"post": {
+				"tags": [
+					"appointments"
+				],
+				"summary": "Adds appointment to doctorID",
+				"description": "Returns the appointment, if added",
+				"operationId": "addAppointment",
+				"produces": [
+					"application/json"
+				],
+				"parameters": [
+					{
+						"name": "doctorID",
+						"in": "path",
+						"description": "Add appointment to this doctor",
+						"required": true,
+						"type": "string",
+						"format": "string"
+					},
+					{
+						"name": "body",
+						"in": "body",
+						"description": "Date of appointment",
+						"required": true,
+						"schema": {
+							"$ref": "#/definitions/AddAppointment"
+      					}
+					}
+				],
+				"responses": {
+					"200": {
+						"description": "successful operation",
+						"schema": {
+							"$ref": "#/definitions/Appointment"
+						}
+					},
+					"400": {
+						"description": "Adding appointment did not succeed"
+					},
+					"404": {
+						"description": "Invalid Doctor ID supplied"
+					}
+				}
+			}
+		},
+		"/appointments/{doctorID}/{date}": {
+			"get": {
+				"tags": [
+					"appointments"
+				],
+				"summary": "Find all appointments for Doctor ID on date",
+				"description": "Returns a list of appointments",
+				"operationId": "getAppointmentsByDate",
+				"produces": [
+					"application/json"
+				],
+				"parameters": [
+					{
+						"name": "doctorID",
+						"in": "path",
+						"description": "Doctor ID to query",
+						"required": true,
+						"type": "string",
+						"format": "string"
+					},
+					{
+						"name": "date",
+						"in": "path",
+						"description": "YYYYMMDD",
+						"required": true,
+						"type": "string",
+						"format": "YYYYMMDD"
+					}
+				],
+				"responses": {
+					"200": {
+						"description": "successful operation",
+						"schema": {
+							"$ref": "#/definitions/Pet"
+						}
+					},
+					"400": {
+						"description": "Query failed"
+					},
+					"404": {
+						"description": "Invalid Doctor ID supplied"
+					}
+				}
+			}
+		},
+		"/appointments/{appointmentID}": {
+			"delete": {
+				"tags": [
+					"appointments"
+				],
+				"summary": "Deletes an appointment",
+				"description": "",
+				"operationId": "deleteAppointment",
+				"produces": [
+					"application/json"
+				],
+				"parameters": [
+					{
+						"name": "appointmentID",
+						"in": "path",
+						"description": "Appointment id to delete",
+						"required": true,
+						"type": "string",
+						"format": "string"
+					}
+				],
+				"responses": {
+					"200": {
+						"description": "successful operation",
+						"schema": {
+							"$ref": "#/definitions/Delete"
+						}
+					},
+					"400": {
+						"description": "Error removing item"
+					},
+					"404": {
+						"description": "Invalid ID supplied"
+					}
+				}
+			}
+		}
+	},
+	"definitions": {
+		"AddAppointment": {
+			"type": "model",
+			"required": [
+				"date",
+				"time",
+				"firstName",
+				"lastName",
+				"type"
+			],
+			"properties": {
+				"date": {
+					"type": "YYYYMMDD",
+					"format": "string"
+				},
+				"time": {
+					"type": "HH:mm",
+					"format": "string"
+				},
+				"firstName": {
+					"type": "string",
+					"format": "string"
+				},
+				"lastName": {
+					"type": "string",
+					"format": "string"
+				},
+				"type": {
+					"type": "string",
+					"description": "Patient type",
+					"enum": [
+						"New Patient",
+						"Follow-up"
+					]
+				}
+			},
+			"xml": {
+				"name": "Order"
+			}
+		},
+		"Appointment": {
+			"type": "object",
+			"properties": {
+				"id": {
+					"type": "string",
+					"format": "24 byte hex"
+				},
+				"name": {
+					"$ref": "#/definitions/Name"
+				},
+				"date": {
+					"type": "string",
+					"format": "YYYYMMDD"
+				},
+				"time": {
+					"type": "string",
+					"format": "HH:mm"
+				},
+				"type": {
+					"type": "string",
+					"description": "Patient type",
+					"enum": [
+						"New Patient",
+						"Follow-up"
+					]
+				}
+			},
+			"xml": {
+				"name": "Order"
+			}
+		},
+		"Doctor": {
+			"type": "object",
+			"properties": {
+				"id": {
+					"type": "string",
+					"format": "24 byte hex"
+				},
+				"name": {
+					"$ref": "#/definitions/Name"
+				}
+			},
+			"xml": {
+				"name": "Order"
+			}
+		},
+		"Name": {
+			"type": "object",
+			"properties": {
+				"first": {
+					"type": "string"
+				},
+				"last": {
+					"type": "string"
+				}
+			},
+			"xml": {
+				"name": "Name"
+			}
+		},
+		"Delete": {
+			"type": "object",
+			"properties": {
+				"first": {
+					"n": "Number deleted"
+				},
+				"last": {
+					"ok": "Operation succeeded"
+				}
+			},
+			"xml": {
+				"name": "Name"
+			}
+		}
+	}
+}

@@ -9,6 +9,20 @@ const Joi = BaseJoi.extend(Extension);
 const express = require('express');
 const monk = require('monk');
 
+// 
+// Configure Express
+//
+const app = express();
+app.use(express.json());
+
+
+//
+// Configure our API documentation
+//
+const swaggerUi = require('swagger-ui-express'),
+    swaggerDocument = require('./swagger.json');
+const router = express.Router();
+app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDocument));
 
 //
 // Our configuration file
@@ -19,12 +33,6 @@ const config = require('./config.json');
 // Connect to the database
 //
 const db = monk(`${config.database.url}:${config.database.port}/notable`);
-
-// 
-// Do Express
-//
-const app = express();
-app.use(express.json());
 
 //
 // Return a list of doctors, _id is doctorID in REST calls
@@ -54,6 +62,9 @@ app.get('/api/appointments', (req, res) => {
 // _id returned is appointmentID in REST calls
 // Date is YYYYMMDD format
 app.get('/api/appointments/:doctorID/:date', (req, res) => {
+    if ( req.params.doctorID.length != 24 ) {
+        return res.status(404).send("Invalid Doctor ID supplied");
+    }
     const doctorID = monk.id(req.params.doctorID);
     const date = req.params.date;
 
@@ -89,6 +100,14 @@ app.post('/api/appointments/:doctorID', (req, res) => {
         type: Joi.string().min(1).max(11).required(),
     };
 
+
+    // check if this is a valid doctor, if not, do not update
+    if ( req.params.doctorID.length != 24 ) {
+        return res.status(404).send("Invalid Doctor ID supplied");
+    }
+    const doctorID = monk.id(req.params.doctorID);
+
+
     // Validate the input and let the user know if it is bad
     Joi.validate(req.body, schema, (err, value) => {
         if ( err ) return res.status(400).send(err.details[0].message);
@@ -103,16 +122,12 @@ app.post('/api/appointments/:doctorID', (req, res) => {
         if ( (value.type != "New Patient") && (value.type != "Follow-up") ) {
             return res.status(400).send("type must be \"New Patient\" or \"Follow-up\"");
         }
-
-        // check if this is a valid doctor, if not, do not update
         const doctors = db.get('doctors');
-        const doctorID = monk.id(req.params.doctorID);
-
         doctors.find({"_id": doctorID}, function(err, doctors) {
             if ( err ) {
                 return res.status(400).send(err.details[0].message);
             }
-            if (!doctors.length) return res.status(400).send(`DoctorID ${doctorID} does not exist`);
+            if (!doctors.length) return res.status(404).send(`DoctorID ${doctorID} not found`);
 
             const appointments = db.get('appointments');
             const date = req.body.date;
@@ -150,6 +165,9 @@ app.post('/api/appointments/:doctorID', (req, res) => {
 
 // Delete an existing appointment from a doctor's calendar
 app.delete('/api/appointments/:appointmentID', (req, res) => {
+    if ( req.params.appointmentID.length != 24 ) {
+        return res.status(404).send("Invalid ID supplied");
+    }
     const appointmentID = monk.id(req.params.appointmentID);
 
     const collection = db.get('appointments');
