@@ -5,5 +5,12 @@
     },
     "server" : {
         "port": "3000"
+    },
+    "parameters" : {
+        "maxOverlappingAppointments" : 3,
+        "minFirstNameLength" : 1,
+        "maxFirstNameLength" : 64,
+        "minLastNameLength" : 1,
+        "maxLastNameLength" : 64
     }
 }

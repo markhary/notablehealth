@@ -66,7 +66,7 @@ return new Promise((resolve) => setTimeout(resolve, timeout));
                     "last": "Kent"
                 },
                 "date": "20180617",
-                "time": "0800",
+                "time": "08:00",
                 "type": "New Patient"
             },
             {
@@ -76,7 +76,7 @@ return new Promise((resolve) => setTimeout(resolve, timeout));
                     "last": "Lane"
                 },
                 "date": "20180617",
-                "time": "0800",
+                "time": "08:00",
                 "type": "Follow-up"
             },
             {
@@ -86,7 +86,7 @@ return new Promise((resolve) => setTimeout(resolve, timeout));
                     "last": "Luthor"
                 },
                 "date": "20180617",
-                "time": "0800",
+                "time": "08:00",
                 "type": "New Patient"
             },
             {
@@ -96,7 +96,7 @@ return new Promise((resolve) => setTimeout(resolve, timeout));
                     "last": "Luthor"
                 },
                 "date": "20180617",
-                "time": "0900",
+                "time": "09:00",
                 "type": "Follow-up"
             },
             {
@@ -106,7 +106,7 @@ return new Promise((resolve) => setTimeout(resolve, timeout));
                     "last": "Luthor"
                 },
                 "date": "20180618",
-                "time": "0900",
+                "time": "09:00",
                 "type": "Follow-up"
             },
             {
@@ -116,7 +116,7 @@ return new Promise((resolve) => setTimeout(resolve, timeout));
                     "last": "Kent"
                 },
                 "date": "20180617",
-                "time": "0800",
+                "time": "08:00",
                 "type": "New Patient"
             },
             {
@@ -126,7 +126,7 @@ return new Promise((resolve) => setTimeout(resolve, timeout));
                     "last": "Luthor"
                 },
                 "date": "20180617",
-                "time": "0700",
+                "time": "07:00",
                 "type": "Follow-up"
             }
         ]);
