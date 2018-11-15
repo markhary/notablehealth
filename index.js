@@ -135,7 +135,6 @@ app.post('/api/appointments/:doctorID', (req, res) => {
             appointments.find({"doctorID": doctorID, "date":date, "time":time}, {}, function(err, results) {
                     // Make sure there are not already 3 appointments in this time slot
                     if (results.length >= config.parameters.maxOverlappingAppointments ) {
-                        console.log("length is " + results.length);
                         return res.status(400).send(`Already have ${config.parameters.maxOverlappingAppointments} for that doctor at that time`);
                     }
 
