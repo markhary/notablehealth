@@ -106,4 +106,5 @@ app.delete('/api/appointment/:appointmentID', (req, res) => {
 
 });
 
-app.listen(port, () => console.log(`Listening on port ${config.server.port}...`));
+// Listen on the specified port
+app.listen(config.server.port, () => console.log(`Listening on port ${config.server.port}...`));

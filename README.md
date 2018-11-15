@@ -2,35 +2,11 @@
 * Backend implemented using node.js, express, and mongodb
 
 ### Installation Instructions
-1. Backend
-  - Customize config.json
-  - `npm install`
-  - Create "notable" database with two collections:
-  		- ***videos***, initialized as follows:
+1. Customize config.json.  It will be used by `npm install` to populate the database.
+2. `$ npm install`
+3. Verify you have a database named *notable* with two collections names *doctors* and *appointments*, respectively.
 
-```
-{
-    "name" : {
-        "first" : "Julius",
-        "last" : "Hibbert"
-    }
-}
-
-{
-    "name" : {
-        "first" : "Algernop",
-        "last" : "Krieger"
-    }
-}
-
-{
-    "name" : {
-        "first" : "Nick",
-        "last" : "Riviera"
-    }
-}
-```
-  		- ***appointments*** - No need to initialize
+### API Documentation
 
 ### Execution Instructions
 

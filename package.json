@@ -4,6 +4,7 @@
   "description": "* Backend implemented using node.js, express, and mongodb",
   "main": "index.js",
   "scripts": {
+    "postinstall": "node config.database.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "keywords": [],
@@ -12,7 +13,6 @@
   "dependencies": {
     "express": "^4.16.4",
     "joi": "^14.0.6",
-    "monk": "^6.0.6",
-    "monk-middleware-debug": "^0.2.0"
+    "monk": "^6.0.6"
   }
 }
