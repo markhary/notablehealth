@@ -12,4 +12,4 @@
 2. Kill w/ `CTRL+c` or `kill`
 
 ### API Documentation
-Available at <server:ip>/api-docs, e.g. `http://localhost:3000/api-doc`
+Available at <server:ip>/api-docs, e.g. `http://localhost:3000/api-docs`
